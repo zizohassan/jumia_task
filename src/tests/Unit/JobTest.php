@@ -147,30 +147,6 @@ class JobTest extends TestCase
         ])->assertStatus(422);
     }
 
-    /**
-     * happy scenario
-     *
-     * @return void
-     */
-    public function test_create_job_success()
-    {
-        ///create manager user to get the email
-        User::create(['name' => 'Abdel Aziz',
-                'user_type' => User::Manager,
-                'password' => bcrypt('1234567890'),
-                'email' => 'manager@example.com']
-        );
-        $this->doPost('api/jobs', $this->job, [
-            'Authorization' => 'Bearer ' . $this->createUserAndLoginFirst()
-        ])->assertStatus(200);
-
-        /// sleep to make sure that cronjob run to send email
-        /// this important because every test hole database dropped and migrate again
-        /// email must show here http://127.0.0.1:8025
-        sleep(10);
-    }
-
-
     /***
      * test min max attr
      */
@@ -210,7 +186,29 @@ class JobTest extends TestCase
             'Authorization' => 'Bearer ' . $this->createUserAndLoginFirst()
         ])->assertStatus(422);
     }
+    
+    /**
+     * happy scenario
+     *
+     * @return void
+     */
+    public function test_create_job_success()
+    {
+        ///create manager user to get the email
+        User::create(['name' => 'Abdel Aziz',
+                'user_type' => User::Manager,
+                'password' => bcrypt('1234567890'),
+                'email' => 'manager@example.com']
+        );
+        $this->doPost('api/jobs', $this->job, [
+            'Authorization' => 'Bearer ' . $this->createUserAndLoginFirst()
+        ])->assertStatus(200);
 
+        /// sleep to make sure that cronjob run to send email
+        /// this important because every test hole database dropped and migrate again
+        /// email must show here http://127.0.0.1:8025
+        sleep(10);
+    }
 
     /**
      * @return void
