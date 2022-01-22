@@ -16,7 +16,7 @@ class JobsController extends BaseApiController
     public function list()
     {
         if (auth()->user()->user_type == User::Manager) {
-            return $this->response(new JobCollection(Job::where('user_id', auth()->user()->id)->paginate(10)));
+            return $this->response(new JobCollection(Job::paginate(10)));
         }
 
         return $this->response(new JobCollection(Job::where('user_id', auth()->user()->id)->paginate(10)));

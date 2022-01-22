@@ -85,8 +85,7 @@ class JobTest extends TestCase
     {
         $token = $this->createUserAndLoginFirst();
         /// create new job with other user id
-        $this->job['user_id'] = 2;
-        Job::created($this->job);
+        Job::create($this->job + ['user_id' => 2]);
 
         $this->doGet('api/jobs', [
             'Authorization' => 'Bearer ' . $token
@@ -100,8 +99,7 @@ class JobTest extends TestCase
      */
     public function test_manager_user_can_list_his_own_jobs_success()
     {
-        $this->userType = 'manager';
-        $token = $this->createUserAndLoginFirst();
+        $token = $this->createUserAndLoginFirst(User::Manager);
         /// create user and login and creat new job
         $this->doPost('api/jobs', $this->job, [
             'Authorization' => 'Bearer ' . $token
@@ -119,11 +117,9 @@ class JobTest extends TestCase
      */
     public function test_manager_can_list_others_jobs_success()
     {
-        $this->userType = User::Manager;
-        $token = $this->createUserAndLoginFirst();
+        $token = $this->createUserAndLoginFirst(User::Manager);
         /// create new job with other user id
-        $this->job['user_id'] = 2;
-        Job::created($this->job);
+        Job::create($this->job + ['user_id' => 2]);
 
         $this->doGet('api/jobs', [
             'Authorization' => 'Bearer ' . $token
@@ -226,9 +222,12 @@ class JobTest extends TestCase
      *
      * @return mixed
      */
-    protected function createUserAndLoginFirst()
+    protected function createUserAndLoginFirst($type = null)
     {
         $this->setUserData();
+        if ($type) {
+            $this->user['user_type'] = $type;
+        }
         $this->createNewUser();
         $response = $this->doPost('api/login', [
             'email' => $this->user['email'],
