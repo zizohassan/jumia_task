@@ -38,7 +38,7 @@ class JobTest extends TestCase
     }
 
     /***
-     * not auth user try to access add job
+     * auth user try to access add job
      */
     public function test_auth_user_jobs_list_success()
     {
@@ -52,7 +52,7 @@ class JobTest extends TestCase
      *
      * @return void
      */
-    public function test_list_regular_user_jobs_success()
+    public function test_regular_user_can_list_jobs_success()
     {
         $token = $this->createUserAndLoginFirst();
         /// create user and login and creat new job
@@ -70,7 +70,7 @@ class JobTest extends TestCase
      *
      * @return void
      */
-    public function test_list_regular_user_other_jobs_fail()
+    public function test_regular_user_con_not_see_other_jobs_fail()
     {
         $token = $this->createUserAndLoginFirst();
         /// create new job with other user id
@@ -87,7 +87,7 @@ class JobTest extends TestCase
      *
      * @return void
      */
-    public function test_list_manager_user_jobs_success()
+    public function test_manager_user_can_see_his_own_jobs_success()
     {
         $this->userType = 'manager';
         $token = $this->createUserAndLoginFirst();
