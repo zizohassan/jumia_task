@@ -23,6 +23,17 @@ class JobTest extends TestCase
     }
 
     /**
+     * @return void
+     */
+    protected function setJobData()
+    {
+        $this->job = [
+            'title' => 'Test Title',
+            'description' => "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
+        ];
+    }
+
+    /**
      * check api security with check not login user cannot access
      * even they know the url
      */
@@ -186,7 +197,7 @@ class JobTest extends TestCase
             'Authorization' => 'Bearer ' . $this->createUserAndLoginFirst()
         ])->assertStatus(422);
     }
-    
+
     /**
      * happy scenario
      *
@@ -208,17 +219,6 @@ class JobTest extends TestCase
         /// this important because every test hole database dropped and migrate again
         /// email must show here http://127.0.0.1:8025
         sleep(10);
-    }
-
-    /**
-     * @return void
-     */
-    protected function setJobData()
-    {
-        $this->job = [
-            'title' => 'Test Title',
-            'description' => "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
-        ];
     }
 
     /**
