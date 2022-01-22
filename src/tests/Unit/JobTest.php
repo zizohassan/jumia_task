@@ -70,7 +70,7 @@ class JobTest extends TestCase
      *
      * @return void
      */
-    public function test_regular_user_con_not_see_other_jobs_fail()
+    public function test_regular_user_con_not_list_other_jobs_fail()
     {
         $token = $this->createUserAndLoginFirst();
         /// create new job with other user id
@@ -87,7 +87,7 @@ class JobTest extends TestCase
      *
      * @return void
      */
-    public function test_manager_user_can_see_his_own_jobs_success()
+    public function test_manager_user_can_list_his_own_jobs_success()
     {
         $this->userType = 'manager';
         $token = $this->createUserAndLoginFirst();
@@ -106,7 +106,7 @@ class JobTest extends TestCase
      *
      * @return void
      */
-    public function test_manager_can_see_others_jobs_success()
+    public function test_manager_can_list_others_jobs_success()
     {
         $this->userType = User::Manager;
         $token = $this->createUserAndLoginFirst();
@@ -152,7 +152,7 @@ class JobTest extends TestCase
      *
      * @return void
      */
-    public function test_create_success()
+    public function test_create_job_success()
     {
         ///create manager user to get the email
         User::create(['name' => 'Abdel Aziz',
